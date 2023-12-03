@@ -54,20 +54,20 @@ impl solve::Solve for D2 {
     {
         let (n, games) = parse(inp);
 
-        const EXP_RED: u32 = 12;
-        const EXP_GREEN: u32 = 13;
-        const EXP_BLUE: u32 = 14;
-
-        let mut add: bool = true;
+        let mut max_g: Game = Game {red:0, green: 0, blue: 0};
 
         for g in games {
-            if (g.red > EXP_RED) || (g.green > EXP_GREEN) || (g.blue > EXP_BLUE) {
-                add = false;
+            if max_g.red < g.red {
+                max_g.red = g.red;
+            }
+            if max_g.green < g.green {
+                max_g.green = g.green;
+            }
+            if max_g.blue < g.blue {
+                max_g.blue = g.blue;
             }
         }
-        if add {
-            self.sum += n;
-        }
+        self.sum += max_g.red * max_g.green * max_g.blue;
     }
 
     fn result(&mut self) -> String
