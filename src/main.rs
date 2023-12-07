@@ -1,12 +1,11 @@
 use std::io::{self, BufRead};
 
-mod d2;
-use crate::d2::solve::Solve;
+mod d3;
+use crate::d3::solve::Solve;
 
 fn main() {
-    println!("Hellool");
 
-    let mut task = d2::D2::new();
+    let mut task = d3::D3::new();
 
     for ln in io::stdin().lock().lines() {
         match ln {
