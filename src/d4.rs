@@ -3,7 +3,9 @@ use std::vec::Vec;
 
 
 pub struct D4 {
-    sum: u32,
+    len: usize,
+    copies: Vec<u32>,
+    result: Vec<u32>,
 }
 
 fn parse(inp: &String) -> Vec<u32> {
@@ -23,13 +25,15 @@ fn parse(inp: &String) -> Vec<u32> {
 impl solve::Solve for D4 {
     fn new() -> D4 
     {
-        D4 { sum: 0 }
+        D4 { len: 0, copies: vec![0; 256], result: vec![0; 256] }
     }
 
     fn process(&mut self, inp: &String)
     {
         let mut chunk = inp.split(':');
-        chunk.next();
+        let card_num = chunk.next().unwrap().trim_start_matches("Card").trim()
+                            .parse::<u32>().unwrap() as usize;
+
 
         chunk = chunk.next().unwrap().split('|');
 
@@ -37,23 +41,42 @@ impl solve::Solve for D4 {
         let numb = parse(&String::from(chunk.next().unwrap()));
         
         let mut str = String::new();
-        let mut inc = 1;
         let mut res = 0;
         for a in numb.iter() {
             if wins.contains(a) {
                 str.push_str(&a.to_string());
                 str.push(' ');
-                res = inc;
-                inc *= 2;
+                res += 1;
+            }
+        }
+
+        self.result[self.len] += 1 + self.copies[self.len];
+        if res > 0 {
+            for i in self.len+1.. self.len+1+res {
+                self.copies[i] += self.result[self.len];
             }
         }
         //println!("> {} = {}", str, res);
-        self.sum += res;
+        self.len += 1;
+        assert!( card_num == self.len, "Unexpected card num {}", card_num);
 
     }
 
     fn result(&mut self) -> String
     {
-       return self.sum.to_string();
+        let mut str = String::new();      
+        let mut str1 = String::new();      
+        let mut sum = 0;
+        for i in 0..self.len {
+            str.push_str(&self.result[i].to_string());
+            str1.push_str(&self.copies[i].to_string());
+            str.push(' ');
+            str1.push(' ');
+            sum += self.result[i];
+        }
+
+        //println!("> {} | {}", str, str1);
+
+        return sum.to_string();
     }
 }
