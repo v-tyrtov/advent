@@ -13,34 +13,36 @@ const TAGS:[&str; 2] =
 
 pub struct D6 {
     state: usize,
-    time: Vec<u32>,
-    dist: Vec<u32>,
+    time: Vec<u64>,
+    dist: Vec<u64>,
 }
 
 impl D6 {
 
 }
 
-fn parse<'a>(inp: &'a str, pattern: &str) -> IResult<&'a str, Vec<u32>> {
+fn parse<'a>(inp: &'a str, pattern: &str) -> IResult<&'a str, Vec<u64>> {
     let mut res = vec![];
     let mut o_str: &str = "";
-    let parse = map_res(digit1, |s: &str| s.parse::<u32>());
     let (seed_str, _t) = tag(pattern)(inp)?;
     let (seed_str, _t) = is_a(" ")(seed_str)?;
     if seed_str.len() > 0 {
-        (o_str, res) = separated_list0(is_a(" "), parse)(seed_str)?;
+        (o_str, res) = separated_list0(is_a(" "), digit1)(seed_str)?;
     };
+    let res1 = res.join("").parse::<u64>().unwrap();
 
-    return Ok((o_str, res));
+    let res2 = vec![res1];
+
+    return Ok((o_str, res2));
 }
 
-fn n_opt(t: u32, d: u32) -> u32 {
+fn n_opt(t: u64, d: u64) -> u64 {
 
-    let x1 = 0.5 * (t as f64 - f64::sqrt((t*t - 4*d).into()));
-    let x2 = 0.5 * (t as f64 + f64::sqrt((t*t - 4*d).into()));
+    let x1 = 0.5 * (t as f64 - f64::sqrt((t as f64 * t as f64 - 4.0 * d as f64).into()));
+    let x2 = 0.5 * (t as f64 + f64::sqrt((t as f64 * t as f64 - 4.0 * d as f64).into()));
 
-    let a = (x1 * 1.001).ceil() as u32;
-    let b = (x2 / 1.001).trunc() as u32;
+    let a = (x1 * 1.00000001).ceil() as u64;
+    let b = (x2 / 1.00000001).trunc() as u64;
 
     println!("{} - {} - {} - {}", x1, a, b, x2);
 
