@@ -12,6 +12,7 @@ use std::fmt;
 
 
 static CARD_VAL: phf::Map<char, u32> = phf_map!{
+    'J' => 0,
     '2' => 1,
     '3' => 2,
     '4' => 3,
@@ -21,7 +22,6 @@ static CARD_VAL: phf::Map<char, u32> = phf_map!{
     '8' => 7,
     '9' => 8,
     'T' => 9,
-    'J' => 10,
     'Q' => 11,
     'K' => 12,
     'A' => 13,
@@ -68,57 +68,69 @@ impl Game {
 
         let mut vs = v.clone();
         vs.sort();
+        vs.reverse(); // Make J the last cards
 
         let mut it = vs.iter();
         let mut char = it.next().unwrap();
 
         let mut num = 1;
         let mut t = Type::One;
+        let check_game = |t, num| { match num {
+                    1 => t,
+                    2 => match t {
+                        Type::One => Type::Pair,
+                        Type::Pair => Type::TwoPair,
+                        Type::Three => Type::House,
+                        _ => panic!("Err 0")
+                    }
+                    3 => match t {
+                        Type::One => Type::Three,
+                        Type::Pair => Type::House,
+                        _ => panic!("Err 1")
+                    }
+                    4 => Type::Four,
+                    5 => Type::Five,
+                    _ => panic!("Err 2")
+                }
+        };
 
         for c in it {
             if c == char {
                 num += 1;
             } else {
-                t = match num {
-                    1 => t,
-                    2 => match t {
-                        Type::One => Type::Pair,
-                        Type::Pair => Type::TwoPair,
-                        Type::Three => Type::House,
-                        _ => panic!("Err 0")
-                    }
-                    3 => match t {
-                        Type::One => Type::Three,
-                        Type::Pair => Type::House,
-                        _ => panic!("Err 1")
-                    }
-                    4 => Type::Four,
-                    5 => Type::Five,
-                    _ => panic!("Err 2")
-                };
+                t = check_game(t, num);
                 num = 1;
                 char= c;
             }
-
         }
-            t = match num {
-                    1 => t,
-                    2 => match t {
-                        Type::One => Type::Pair,
-                        Type::Pair => Type::TwoPair,
-                        Type::Three => Type::House,
-                        _ => panic!("Err 0")
-                    }
-                    3 => match t {
-                        Type::One => Type::Three,
-                        Type::Pair => Type::House,
-                        _ => panic!("Err 1")
-                    }
-                    4 => Type::Four,
+        if char.c != 'J' {
+            t = check_game(t, num);
+        } else {
+            t = match t {
+                Type::One => match num {
+                    1 => Type::Pair,
+                    2 => Type::Three,
+                    3 => Type::Four,
+                    4 => Type::Five,
                     5 => Type::Five,
-                    _ => panic!("Err 2")
-                };
-        
+                    _ => panic!("Err 4")
+                },
+                Type::Pair => match num {
+                    1 => Type::Three,
+                    2 => Type::Four,
+                    3 => Type::Five,
+                    _ => panic!("Err 5")
+                },
+                Type::Three => match num {
+                    1 => Type::Four,
+                    2 => Type::Five,
+                    _ => panic!("Err 6")
+                },
+                Type::Four => Type::Five,
+                Type::TwoPair => Type::House,
+                _ => panic!("Err 7")
+            }
+        };
         Game{cards: v, bid: b, hand: t}
     }
 }
