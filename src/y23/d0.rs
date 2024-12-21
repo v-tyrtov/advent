@@ -5,16 +5,16 @@
 //}
 //
 
-#[path = "solve.rs"] pub mod solve;
+#[path = "../solve.rs"] pub mod solve;
 
-pub struct D1 {
+pub struct Dx {
     curr: u64,
     max1: u64,
     max2: u64,
     max3: u64,
 }
 
-impl D1 {
+impl Dx {
     fn update_max(&mut self)
     {
         if self.max1 < self.curr {
@@ -36,10 +36,10 @@ impl D1 {
     }
 }
 
-impl solve::Solve for D1 {
-    fn new() -> D1 
+impl solve::Solve for Dx {
+    fn new() -> Dx
     {
-        D1 { curr: 0, max1: 0, max2: 0, max3: 0 }
+        Dx { curr: 0, max1: 0, max2: 0, max3: 0 }
     }
 
     fn process(&mut self, inp: &String)

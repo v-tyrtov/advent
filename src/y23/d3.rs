@@ -1,6 +1,6 @@
 use std::vec::Vec;
 use std::collections::HashMap;
-#[path = "solve.rs"] pub mod solve;
+#[path = "../solve.rs"] pub mod solve;
 
 
 struct GearTst {
@@ -9,14 +9,14 @@ struct GearTst {
     h: usize,
 }
 
-pub struct D3 {
+pub struct Dx {
     map: Vec<Vec<char>>,
     tst: GearTst,
     gears: HashMap<(usize, usize), Vec<u32>>,
 }
 
 
-impl D3 {
+impl Dx {
     fn is_around(&self, v: usize, h: usize) -> bool {
         let mut res = false;
         if (v >0) && (self.map[v-1][h] != '.') { res = true }
@@ -59,10 +59,10 @@ impl D3 {
     }
 }
 
-impl solve::Solve for D3 {
-    fn new() -> D3 
+impl solve::Solve for Dx {
+    fn new() -> Dx 
     {
-        D3 { map: Vec::new(), gears: HashMap::new(),
+        Dx { map: Vec::new(), gears: HashMap::new(),
               tst: GearTst{is_gear: false, v: 0, h: 0} }
     }
 

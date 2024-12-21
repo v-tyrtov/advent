@@ -4,20 +4,20 @@ use nom::multi::separated_list0;
 use nom::bytes::complete::{is_a, tag};
 use nom::{Err, IResult};
 
-#[path = "solve.rs"] pub mod solve;
+#[path = "../solve.rs"] pub mod solve;
 
 
 const TAGS:[&str; 2] =
             ["Time:",
              "Distance:"];
 
-pub struct D6 {
+pub struct Dx {
     state: usize,
     time: Vec<u64>,
     dist: Vec<u64>,
 }
 
-impl D6 {
+impl Dx {
 
 }
 
@@ -49,10 +49,10 @@ fn n_opt(t: u64, d: u64) -> u64 {
     return b-a+1;
 }
 
-impl solve::Solve for D6 {
-    fn new() -> D6
+impl solve::Solve for Dx {
+    fn new() -> Dx
     {
-        D6 {
+        Dx {
             state: 0,
             time: vec![],
             dist: vec![]

@@ -1,5 +1,5 @@
 use std::vec::Vec;
-#[path = "solve.rs"] pub mod solve;
+#[path = "../solve.rs"] pub mod solve;
 
 
 const COLORS:[&str; 3] = ["red", "green", "blue"];
@@ -10,7 +10,7 @@ struct Game {
     blue: u32,
 }
 
-pub struct D2 {
+pub struct Dx {
     sum: u32,
 }
 
@@ -44,10 +44,10 @@ fn parse(inp: &String) -> (u32, Vec<Game>) {
     return (game_n, games);
 }
 
-impl solve::Solve for D2 {
-    fn new() -> D2 
+impl solve::Solve for Dx {
+    fn new() -> Dx 
     {
-        D2 { sum: 0 }
+        Dx { sum: 0 }
     }
 
     fn process(&mut self, inp: &String)

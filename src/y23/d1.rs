@@ -1,16 +1,16 @@
-#[path = "solve.rs"] pub mod solve;
+#[path = "../solve.rs"] pub mod solve;
 
 const SPELL:[&str; 9] = ["one", "two", "three", "four", "five",
                 "six", "seven", "eight", "nine"];
 
-pub struct D1 {
+pub struct Dx {
     sum: u64,
 }
 
-impl solve::Solve for D1 {
-    fn new() -> D1 
+impl solve::Solve for Dx {
+    fn new() -> Dx 
     {
-        D1 { sum: 0 }
+        Dx { sum: 0 }
     }
 
     fn process(&mut self, inp: &String)
@@ -33,12 +33,7 @@ impl solve::Solve for D1 {
         }
 
         for idx in 0..9 {
-            let mut pos = inp.find(SPELL[idx]);
-            if pos != None {
-                if pos.unwrap() < left_pos {
-                    left = (idx + 1) as u64;
-                    left_pos = pos.unwrap();
-                }
+            let mut pos = inp.find(SPELL[idx]); if pos != None { if pos.unwrap() < left_pos { left = (idx + 1) as u64; left_pos = pos.unwrap(); }
             }
             pos = inp.rfind(SPELL[idx]);
             if pos != None {

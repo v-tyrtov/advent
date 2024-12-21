@@ -1,8 +1,8 @@
 use std::vec::Vec;
-#[path = "solve.rs"] pub mod solve;
+#[path = "../solve.rs"] pub mod solve;
 
 
-pub struct D4 {
+pub struct Dx {
     len: usize,
     copies: Vec<u32>,
     result: Vec<u32>,
@@ -22,10 +22,10 @@ fn parse(inp: &String) -> Vec<u32> {
     return ints;
 }
 
-impl solve::Solve for D4 {
-    fn new() -> D4 
+impl solve::Solve for Dx {
+    fn new() -> Dx 
     {
-        D4 { len: 0, copies: vec![0; 256], result: vec![0; 256] }
+        Dx { len: 0, copies: vec![0; 256], result: vec![0; 256] }
     }
 
     fn process(&mut self, inp: &String)

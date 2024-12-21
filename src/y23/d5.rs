@@ -5,7 +5,7 @@ use nom::bytes::complete::tag;
 use nom::IResult;
 use std::collections::BTreeSet;
 
-#[path = "solve.rs"] pub mod solve;
+#[path = "../solve.rs"] pub mod solve;
 
 
 const TAGS:[&str; 8] =
@@ -24,14 +24,14 @@ struct Range {
     len: u64
 }
 
-pub struct D5 {
+pub struct Dx {
     state: usize,
     first_str: bool,
     seeds: BTreeSet<Range>,
     mapped: BTreeSet<Range>,
 }
 
-impl D5 {
+impl Dx {
 
 }
 
@@ -109,10 +109,10 @@ mod tests {
     }
 }
 
-impl solve::Solve for D5 {
-    fn new() -> D5
+impl solve::Solve for Dx {
+    fn new() -> Dx
     {
-        D5 {
+        Dx {
             state: 0,
             first_str: false,
             seeds: BTreeSet::new(),

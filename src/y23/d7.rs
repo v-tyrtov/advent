@@ -8,7 +8,7 @@ use std::collections::BTreeSet;
 use std::cmp::Ordering;
 use std::fmt;
 
-#[path = "solve.rs"] pub mod solve;
+#[path = "../solve.rs"] pub mod solve;
 
 
 static CARD_VAL: phf::Map<char, u32> = phf_map!{
@@ -178,11 +178,11 @@ impl fmt::Debug for Game {
     }
 }
 
-pub struct D7 {
+pub struct Dx {
     games: BTreeSet<Game>,
 }
 
-impl D7 {
+impl Dx {
 
 }
 
@@ -203,10 +203,10 @@ fn parse<'a>(inp: &'a str) -> IResult<&'a str, Game> {
     return Ok((o_str, res));
 }
 
-impl solve::Solve for D7 {
-    fn new() -> D7
+impl solve::Solve for Dx {
+    fn new() -> Dx
     {
-        D7 {
+        Dx {
             games: BTreeSet::new()
         }
     }
