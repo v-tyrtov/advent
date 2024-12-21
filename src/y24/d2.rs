@@ -14,7 +14,7 @@ fn get_sample<'a>(inp: &'a str) -> IResult<&'a str, Vec<u64>> {
     separated_list0(space1, parse)(inp)
 }
 
-fn process(inp: &Vec<u64>) -> u64 {
+fn check(inp: &Vec<u64>) -> u64 {
     let dir: i64 = inp[0] as i64 - inp[1] as i64;
     if dir == 0 { return 0 }
     
@@ -38,6 +38,15 @@ fn process(inp: &Vec<u64>) -> u64 {
     }
 
     1
+}
+
+fn process(inp: &Vec<u64>) -> u64 {
+    for a in 0..inp.len() {
+        let mut vec = inp.clone();
+        vec.remove(a);
+        if check(&vec) == 1 { return 1 };
+    }
+    0
 }
 
 impl solve::Solve for Dx {
