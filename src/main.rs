@@ -1,7 +1,7 @@
 use std::io::{self, BufRead};
-mod y23;
-use y23::Problem;
-use y23::Solve;
+mod y24;
+use y24::Problem;
+use y24::Solve;
 
 fn main() {
 
