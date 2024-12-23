@@ -1,3 +1,3 @@
-pub mod d2;
-pub use crate::y24::d2::Dx as Problem;
-pub use crate::y24::d2::solve::Solve;
+pub mod d3;
+pub use crate::y24::d3::Dx as Problem;
+pub use crate::y24::d3::solve::Solve;
